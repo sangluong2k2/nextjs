@@ -1,4 +1,5 @@
-import { GetStaticProps } from 'next'
+import { GetStaticProps, GetStaticPropsContext } from 'next'
+import Link from 'next/link';
 import React from 'react'
 
 type ProductProps = {
@@ -6,24 +7,22 @@ type ProductProps = {
 }
 
 const Products = ({products}: ProductProps) => {
+
   return (
     <div>
       {products.map( item => (
-        <div key={item.id}> 
-          {item.name}
-        </div>
+        <div key={item.id}><Link href={`/products/${item.id}`}>{item.name}</Link></div>
       ))}
     </div>
   )
 }
 
-export const getStaticProps: GetStaticProps<ProductProps> = async (context) => {
+export const getStaticProps: GetStaticProps<ProductProps> = async (context: GetStaticPropsContext) => {
   console.log('getStaticProps');
-  const responsive = await fetch('https://6110f09bc38a0900171f0ed0.mockapi.io/products');
-  const data = await responsive.json();
+  const data = await( await fetch('https://6110f09bc38a0900171f0ed0.mockapi.io/products')).json();
   return {
     props: {
-      products: data
+      products: data.map(item => ({id: item.id, name: item.name}))
     }
   }
 }
