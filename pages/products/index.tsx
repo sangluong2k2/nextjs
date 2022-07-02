@@ -19,7 +19,7 @@ const Products = ({products}: ProductProps) => {
 
 export const getStaticProps: GetStaticProps<ProductProps> = async (context: GetStaticPropsContext) => {
   console.log('getStaticProps');
-  const data = await( await fetch('https://6110f09bc38a0900171f0ed0.mockapi.io/products')).json();
+  const data = await( await fetch('https://62bfe6c1d40d6ec55cc77e67.mockapi.io/products')).json();
   return {
     props: {
       products: data.map(item => ({id: item.id, name: item.name}))

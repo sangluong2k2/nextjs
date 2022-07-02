@@ -17,7 +17,7 @@ const DetailProduct = ({ product }: ProductProps) => {
 }
 
 // export const getStaticPaths: GetStaticPaths = async () => {
-//   const data = await (await fetch(`https://6110f09bc38a0900171f0ed0.mockapi.io/products`)).json();
+//   const data = await (await fetch(`https://62bfe6c1d40d6ec55cc77e67.mockapi.io/products`)).json();
 //   const paths = data.map(product => (
 //     { params: { id: product.id } }
 //   ))
@@ -28,7 +28,7 @@ const DetailProduct = ({ product }: ProductProps) => {
 // }
 
 // export const getStaticProps: GetStaticProps<ProductProps> = async (context: GetStaticPropsContext) => {
-//   const product = await (await fetch(`https://6110f09bc38a0900171f0ed0.mockapi.io/products/${context.params?.id}`)).json();
+//   const product = await (await fetch(`https://62bfe6c1d40d6ec55cc77e67.mockapi.io/products/${context.params?.id}`)).json();
 //   return {
 //     props: {
 //       product
@@ -37,10 +37,11 @@ const DetailProduct = ({ product }: ProductProps) => {
 // }
 
 //SSR 
-  export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-    const product = await (await fetch(`https://6110f09bc38a0900171f0ed0.mockapi.io/products/${context.params?.id}`)).json();
-    return {
-      props:{product}
-    }
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  context.res.setHeader("Cache-Control", "s-maxage=10")
+  const product = await (await fetch(`https://62bfe6c1d40d6ec55cc77e67.mockapi.io/products/${context.params?.id}`)).json();
+  return {
+    props:{product}
   }
+}
 export default DetailProduct
